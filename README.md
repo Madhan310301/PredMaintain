@@ -103,27 +103,27 @@ All model outputs are fused into a single normalised score: **0 (critical fault)
 
 ```
 ╔══════════════════════════════════════════════════════════════════════╗
-║                     PREDMAINTAIN PIPELINE                           ║
+║                     PREDMAINTAIN PIPELINE                            ║
 ╠══════════════╦═══════════════════════════════════════════════════════╣
-║   STAGE 1    ║  📡 Sensor Acquisition & Streaming                   ║
-║              ║  Vibration · Temperature · Pressure · Current · Acoustic
-║              ║  → Apache Kafka → InfluxDB                           ║
+║   STAGE 1    ║  📡 Sensor Acquisition & Streaming                   ║            
+║              ║  Vibration·Temperature·Pressure·Current·Acoustic      ║
+║              ║  → Apache Kafka → InfluxDB                            ║
 ╠══════════════╬═══════════════════════════════════════════════════════╣
 ║   STAGE 2    ║  ⚙️  Signal Processing & Feature Engineering          ║
-║              ║  FFT · Bandpass Filter · tsfresh · PCA               ║
-║              ║  → Engineered Feature Matrix                         ║
+║              ║  FFT · Bandpass Filter · tsfresh · PCA                ║
+║              ║  → Engineered Feature Matrix                          ║
 ╠══════════════╬═══════════════════════════════════════════════════════╣
-║   STAGE 3    ║  🧠 ML Model Ensemble Inference                      ║
-║              ║  RF + SVM (Classification) · IF + AE (Anomaly)      ║
-║              ║  XGBoost + LSTM (RUL) · SHAP (Explainability)       ║
+║   STAGE 3    ║  🧠 ML Model Ensemble Inference                       ║
+║              ║  RF + SVM (Classification) · IF + AE (Anomaly)        ║
+║              ║  XGBoost + LSTM (RUL) · SHAP (Explainability)         ║
 ╠══════════════╬═══════════════════════════════════════════════════════╣
-║   STAGE 4    ║  📊 Health Score Aggregation & Alert Dispatch        ║
-║              ║  Weighted Ensemble → Machine Health Index (0–100)   ║
-║              ║  → Celery + Redis → Email / SMS / In-Platform Alert  ║
+║   STAGE 4    ║  📊 Health Score Aggregation & Alert Dispatch         ║
+║              ║  Weighted Ensemble → Machine Health Index (0–100)     ║
+║              ║  → Celery + Redis → Email / SMS / In-Platform Alert   ║
 ╠══════════════╬═══════════════════════════════════════════════════════╣
 ║   STAGE 5    ║  📺 Dashboard Visualisation & Report Generation       ║
-║              ║  Grafana Live Dashboard · Streamlit Reports          ║
-║              ║  SHAP Waterfall Plots · PDF Health Reports on Demand ║
+║              ║  Grafana Live Dashboard · Streamlit Reports           ║
+║              ║  SHAP Waterfall Plots · PDF Health Reports on Demand  ║
 ╚══════════════╩═══════════════════════════════════════════════════════╝
 ```
 
