@@ -27,9 +27,11 @@ export function PredictiveTimeline({ machines }: PredictiveTimelineProps) {
   return (
     <div className="space-y-3">
       {atRisk.slice(0, 5).map((machine) => {
+        // Deterministic forecast window based on interval & operating criticality
+        const baseInterval = machine.maintenanceIntervalDays || 60;
         const daysUntilRisk = machine.status === "critical"
-          ? Math.floor(Math.random() * 5) + 1
-          : Math.floor(Math.random() * 20) + 5;
+          ? Math.max(1, Math.min(4, Math.floor((baseInterval * 0.04) + (machine.id % 2))))
+          : Math.max(6, Math.min(21, Math.floor((baseInterval * 0.2) + (machine.id % 5))));
 
         return (
           <div

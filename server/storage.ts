@@ -236,16 +236,16 @@ export function seedData() {
   // Seed maintenance records
   const technicians = ["John Rivera", "Maria Chen", "Arun Patel", "Sarah Kim", "Carlos Mendez"];
   const maintenanceDescriptions = [
-    { desc: "Scheduled bearing replacement", type: "preventive" as const, parts: ["Bearing SKF 6205", "Seal kit"], cost: 450 },
-    { desc: "Emergency motor repair", type: "corrective" as const, parts: ["Motor winding", "Capacitor"], cost: 2800 },
-    { desc: "AI-predicted coolant system flush", type: "predictive" as const, parts: ["Coolant filter", "O-rings"], cost: 320 },
-    { desc: "Lubrication system overhaul", type: "preventive" as const, parts: ["Lubricant 5L", "Grease fittings"], cost: 180 },
-    { desc: "Vibration sensor calibration", type: "preventive" as const, parts: ["Calibration kit"], cost: 150 },
-    { desc: "Hydraulic line replacement", type: "corrective" as const, parts: ["Hydraulic hose", "Fittings", "Fluid 10L"], cost: 1200 },
-    { desc: "AI-detected belt tension adjustment", type: "predictive" as const, parts: ["Drive belt"], cost: 280 },
-    { desc: "Electrical panel inspection", type: "preventive" as const, parts: ["Fuses", "Contact cleaners"], cost: 95 },
-    { desc: "Gearbox oil change", type: "preventive" as const, parts: ["Gear oil 20L", "Drain plug gasket"], cost: 210 },
-    { desc: "AI-predicted thermal paste renewal", type: "predictive" as const, parts: ["Thermal compound", "Cleaning solvent"], cost: 85 },
+    { desc: "Scheduled bearing replacement & shaft alignment", type: "preventive" as const, parts: ["Bearing SKF 6205", "Seal kit"], cost: 450 },
+    { desc: "Emergency motor repair & winding re-insulation", type: "corrective" as const, parts: ["Motor winding", "Capacitor"], cost: 2800 },
+    { desc: "Coolant system purge & heat exchanger flush", type: "predictive" as const, parts: ["Coolant filter", "O-rings"], cost: 320 },
+    { desc: "Centralized lubrication overhaul & grease re-pack", type: "preventive" as const, parts: ["Lubricant ISO VG 220 5L", "Fittings"], cost: 180 },
+    { desc: "Piezoelectric vibration sensor recalibration", type: "preventive" as const, parts: ["Calibration kit"], cost: 150 },
+    { desc: "Hydraulic servo line replacement & pressure testing", type: "corrective" as const, parts: ["Hydraulic hose", "Fittings", "Fluid ISO 46 10L"], cost: 1200 },
+    { desc: "Drive belt tensioning & pulley laser alignment", type: "predictive" as const, parts: ["Drive belt Optibelt"], cost: 280 },
+    { desc: "Main electrical switchgear thermal scan & contact cleaning", type: "preventive" as const, parts: ["Thermal fuses", "DeoxIT"], cost: 95 },
+    { desc: "Planetary gearbox oil sampling and filtration", type: "preventive" as const, parts: ["Synthetic gear oil 20L", "Magnetic drain plug"], cost: 210 },
+    { desc: "Spindle thermal interface renewal & sensor probe check", type: "predictive" as const, parts: ["Thermal interface compound", "Solvent"], cost: 85 },
   ];
 
   const daysAgo = (d: number) => {
@@ -263,10 +263,10 @@ export function seedData() {
       type: md.type,
       description: md.desc,
       technician: technicians[i % technicians.length],
-      cost: md.cost + Math.floor(Math.random() * 200),
-      durationHours: 1 + Math.random() * 7,
+      cost: md.cost + (i * 35) % 180,
+      durationHours: 1.5 + (i * 1.2) % 6,
       partsReplaced: md.parts,
-      date: daysAgo(Math.floor(Math.random() * 90)),
+      date: daysAgo(((i * 7 + 3) % 85) + 2),
     });
   }
 }

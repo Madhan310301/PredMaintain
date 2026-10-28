@@ -90,7 +90,19 @@ export function useAnalysisHistory(machineId: number) {
   });
 }
 
-// ================= SIMULATION =================
+// ================= TELEMETRY SIMULATION =================
+
+export function useSimulationStatus() {
+  return useQuery<{ running: boolean; tickCount: number }>({
+    queryKey: ["simulation-status"],
+    queryFn: async () => {
+      const res = await fetch("/api/simulation/status");
+      if (!res.ok) throw new Error("Failed to fetch simulation status");
+      return res.json();
+    },
+    refetchInterval: 3000,
+  });
+}
 
 export function useToggleSimulation() {
   const queryClient = useQueryClient();
@@ -105,7 +117,9 @@ export function useToggleSimulation() {
       return res.json();
     },
     onSuccess: () => {
-      queryClient.invalidateQueries();
+      queryClient.invalidateQueries({ queryKey: ["simulation-status"] });
+      queryClient.invalidateQueries({ queryKey: ["machines"] });
+      queryClient.invalidateQueries({ queryKey: ["fleet-summary"] });
     },
   });
 }

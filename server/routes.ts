@@ -122,7 +122,7 @@ export async function registerRoutes(server: Server, app: Express): Promise<Serv
     const criticalCount = machines.filter((m) => m.status === "critical").length;
 
     // Department health
-    const departments = [...new Set(machines.map((m) => m.department))];
+    const departments = Array.from(new Set(machines.map((m) => m.department)));
     const departmentHealth = departments.map((dept) => {
       const deptMachines = machines.filter((m) => m.department === dept);
       const healthScore =
@@ -154,7 +154,11 @@ export async function registerRoutes(server: Server, app: Express): Promise<Serv
     });
   });
 
-  // ============ SIMULATION ============
+  // ============ TELEMETRY INGESTION & SIMULATION ============
+
+  app.get("/api/simulation/status", async (_, res) => {
+    res.json({ running: !!simulationInterval, tickCount });
+  });
 
   app.post("/api/simulation/toggle", async (req, res) => {
     const { running } = req.body;

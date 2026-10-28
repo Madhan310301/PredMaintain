@@ -10,8 +10,8 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Badge } from "@/components/ui/badge";
 import {
-  BrainCircuit, History, ArrowLeft, RefreshCw, AlertOctagon,
-  Calendar, Wrench, TrendingUp, Clock, Shield
+  Activity, History, ArrowLeft, RefreshCw, AlertOctagon,
+  Calendar, Wrench, TrendingUp, Clock, Shield, Sliders
 } from "lucide-react";
 import { Link } from "wouter";
 import { format } from "date-fns";
@@ -58,14 +58,14 @@ export default function MachineDetail() {
           <Button 
             onClick={() => analyze(id)} 
             disabled={analyzing}
-            className="bg-purple-600 hover:bg-purple-700 text-white shadow-lg shadow-purple-900/20"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground font-medium text-xs h-9"
           >
             {analyzing ? (
-              <RefreshCw className="w-4 h-4 mr-2 animate-spin" />
+              <RefreshCw className="w-3.5 h-3.5 mr-2 animate-spin" />
             ) : (
-              <BrainCircuit className="w-4 h-4 mr-2" />
+              <Activity className="w-3.5 h-3.5 mr-2" />
             )}
-            Run AI Analysis
+            Evaluate Asset Condition
           </Button>
         </div>
       </div>
@@ -90,11 +90,11 @@ export default function MachineDetail() {
               analysis.status === 'warning' ? 'border-l-amber-500' : 'border-l-rose-500'
             )}>
               <CardHeader className="pb-2">
-                <CardTitle className="flex items-center gap-2 text-sm">
-                  <BrainCircuit className="w-4 h-4 text-purple-500" />
-                  AI Diagnostic
-                  <span className="text-[10px] font-normal text-muted-foreground ml-auto">
-                    {(analysis.confidence * 100).toFixed(0)}% conf.
+                <CardTitle className="flex items-center gap-2 text-sm font-semibold">
+                  <Activity className="w-4 h-4 text-primary" />
+                  Diagnostic Condition Report
+                  <span className="text-[10px] font-mono text-muted-foreground ml-auto">
+                    Confidence: {(analysis.confidence * 100).toFixed(0)}%
                   </span>
                 </CardTitle>
               </CardHeader>
@@ -109,18 +109,18 @@ export default function MachineDetail() {
                 )}
 
                 <div className="grid grid-cols-2 gap-2">
-                  <MetricBadge label="Failure Prob." value={`${(analysis.failureProbability * 100).toFixed(0)}%`}
+                  <MetricBadge label="Stoppage Risk" value={`${(analysis.failureProbability * 100).toFixed(0)}%`}
                     color={analysis.failureProbability > 0.5 ? "text-rose-400" : "text-emerald-400"} />
-                  <MetricBadge label="RUL" value={`${analysis.remainingUsefulLifeDays}d`}
+                  <MetricBadge label="Estimated RUL" value={`${analysis.remainingUsefulLifeDays}d`}
                     color={analysis.remainingUsefulLifeDays < 10 ? "text-rose-400" : "text-emerald-400"} />
-                  <MetricBadge label="Trend" value={analysis.trendDirection}
+                  <MetricBadge label="Drift Trend" value={analysis.trendDirection.toUpperCase()}
                     color={analysis.trendDirection === "degrading" ? "text-rose-400" : analysis.trendDirection === "improving" ? "text-emerald-400" : "text-blue-400"} />
-                  <MetricBadge label="Anomalies" value={`${analysis.anomalies.length}`}
+                  <MetricBadge label="SPC Outliers" value={`${analysis.anomalies.length}`}
                     color={analysis.anomalies.length > 0 ? "text-amber-400" : "text-emerald-400"} />
                 </div>
 
                 <div>
-                  <h4 className="text-[10px] font-semibold mb-1.5 text-muted-foreground uppercase tracking-wider">Recommendations</h4>
+                  <h4 className="text-[10px] font-semibold mb-1.5 text-muted-foreground uppercase tracking-wider">Recommended Maintenance Directives</h4>
                   <ul className="space-y-1">
                     {analysis.recommendations.slice(0, 4).map((rec: string, i: number) => (
                       <li key={i} className="text-xs text-muted-foreground flex items-start gap-1.5">
@@ -135,7 +135,7 @@ export default function MachineDetail() {
 
             {/* Health Gauge */}
             <Card className="flex items-center justify-center bg-card/50">
-              <HealthGauge score={analysis.overallHealthScore} size={220} />
+              <HealthGauge score={analysis.overallHealthScore} size={220} label="Condition Index" />
             </Card>
 
             {/* Risk Radar */}
@@ -220,7 +220,7 @@ export default function MachineDetail() {
         <Card className="bg-card/50">
           <CardHeader>
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <BrainCircuit className="w-4 h-4 text-purple-500" /> Analysis History
+              <History className="w-4 h-4 text-primary" /> Diagnostic History
             </CardTitle>
           </CardHeader>
           <CardContent>

@@ -67,7 +67,6 @@ app.use((req, res, next) => {
 
   const port = parseInt(process.env.PORT || "5000", 10);
 
-  // 🔥 FIXED HERE — removed 0.0.0.0 binding
   httpServer.listen(port, () => {
     log(`Server running at http://localhost:${port}`);
   });

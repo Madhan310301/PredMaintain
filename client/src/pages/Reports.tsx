@@ -30,26 +30,26 @@ export default function Reports() {
           <FileText className="w-6 h-6" />
         </div>
         <div>
-          <h1 className="text-2xl font-bold">Fleet Report</h1>
-          <p className="text-muted-foreground text-sm">Comprehensive system health overview</p>
+          <h1 className="text-2xl font-bold">Plant Reliability & Telemetry Report</h1>
+          <p className="text-muted-foreground text-sm">Asset integrity, maintenance expenditure, and condition telemetry compliance</p>
         </div>
       </div>
 
       {/* Key Metrics */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-        <ReportMetric label="Fleet Health" value={`${fleet?.averageHealthScore || 0}%`} icon={Shield}
+        <ReportMetric label="Condition Index" value={`${fleet?.averageHealthScore || 0}%`} icon={Shield}
           color={(fleet?.averageHealthScore || 0) >= 70 ? "text-emerald-500" : "text-amber-500"} />
         <ReportMetric label="Uptime" value={`${fleet?.averageUptime || 0}%`} icon={TrendingUp} color="text-blue-500" />
         <ReportMetric label="Active Alerts" value={`${activeAlerts.length}`} icon={AlertTriangle} color="text-amber-500" />
-        <ReportMetric label="Critical" value={`${criticalMachines.length}`} icon={AlertTriangle} color="text-rose-500" />
+        <ReportMetric label="Critical Units" value={`${criticalMachines.length}`} icon={AlertTriangle} color="text-rose-500" />
         <ReportMetric label="Maint. Cost" value={`$${(totalMaintenanceCost / 1000).toFixed(1)}k`} icon={DollarSign} color="text-emerald-500" />
-        <ReportMetric label="Predicted Failures" value={`${fleet?.predictedFailuresThisWeek || 0}`} icon={Shield} color="text-rose-400" />
+        <ReportMetric label="Horizon Stoppages" value={`${fleet?.predictedFailuresThisWeek || 0}`} icon={Shield} color="text-rose-400" />
       </div>
 
       {/* Machine Health Summary Table */}
       <Card className="bg-card/50">
         <CardHeader>
-          <CardTitle className="text-sm font-medium text-muted-foreground">Machine Health Summary</CardTitle>
+          <CardTitle className="text-sm font-medium text-muted-foreground">Asset Telemetry & Integrity Overview</CardTitle>
         </CardHeader>
         <CardContent className="p-0">
           <Table>

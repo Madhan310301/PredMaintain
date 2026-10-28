@@ -35,15 +35,15 @@ export function MachineCard({ machine }: MachineCardProps) {
           </div>
 
           <div className="grid grid-cols-3 gap-2">
-            <SensorStat icon={Thermometer} label="Temp" value={`${machine.specifications.maxTemp}°C`} />
-            <SensorStat icon={Activity} label="Vibration" value={`${machine.specifications.maxVibration}mm`} />
-            <SensorStat icon={Zap} label="Power" value={`${machine.specifications.maxCurrent}A`} />
+            <SensorStat icon={Thermometer} label="Max Temp" value={`${machine.specifications.maxTemp}°C`} />
+            <SensorStat icon={Activity} label="Max Vib" value={`${machine.specifications.maxVibration}mm`} />
+            <SensorStat icon={Zap} label="Max Current" value={`${machine.specifications.maxCurrent}A`} />
             {machine.specifications.maxPressure > 0 && (
-              <SensorStat icon={Gauge} label="Pressure" value={`${machine.specifications.maxPressure}psi`} />
+              <SensorStat icon={Gauge} label="Max Press" value={`${machine.specifications.maxPressure}psi`} />
             )}
-            <SensorStat icon={Droplets} label="Humidity" value={`${machine.specifications.maxHumidity}%`} />
+            <SensorStat icon={Droplets} label="Max Humid" value={`${machine.specifications.maxHumidity}%`} />
             {machine.specifications.maxRpm > 0 && (
-              <SensorStat icon={RotateCw} label="RPM" value={`${machine.specifications.maxRpm}`} />
+              <SensorStat icon={RotateCw} label="Rated RPM" value={`${machine.specifications.maxRpm}`} />
             )}
           </div>
           

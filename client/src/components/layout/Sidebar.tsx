@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { LayoutDashboard, Server, Wrench, BarChart2, Bell, FileText, Activity } from "lucide-react";
+import { LayoutDashboard, Server, Wrench, BarChart2, Bell, FileText, Activity, Cpu, ExternalLink } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useAlerts } from "@/hooks/use-alerts";
 
@@ -13,22 +13,26 @@ export function Sidebar({ className }: SidebarProps) {
   const activeAlertCount = alerts?.filter((a) => !a.acknowledged).length || 0;
 
   const navItems = [
-    { href: "/", icon: LayoutDashboard, label: "Dashboard" },
-    { href: "/machines", icon: Server, label: "Machines" },
-    { href: "/analytics", icon: BarChart2, label: "Analytics" },
-    { href: "/maintenance", icon: Wrench, label: "Maintenance" },
-    { href: "/alerts", icon: Bell, label: "Alerts", badge: activeAlertCount > 0 ? activeAlertCount : null },
-    { href: "/reports", icon: FileText, label: "Reports" },
+    { href: "/dashboard", icon: LayoutDashboard, label: "Operations Console" },
+    { href: "/machines", icon: Server, label: "Asset Inventory" },
+    { href: "/analytics", icon: BarChart2, label: "Reliability Analytics" },
+    { href: "/maintenance", icon: Wrench, label: "Work Orders (CMMS)" },
+    { href: "/alerts", icon: Bell, label: "Condition Alerts", badge: activeAlertCount > 0 ? activeAlertCount : null },
+    { href: "/reports", icon: FileText, label: "Fleet Reports" },
+    { href: "/models", icon: Cpu, label: "Model Monitoring" },
   ];
 
   return (
     <aside className={cn("w-64 bg-card border-r border-border/50 flex flex-col", className)}>
       <div className="h-16 flex items-center px-6 border-b border-border/50">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-purple-900/30">
-            <Activity className="w-5 h-5 text-white" />
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-lg bg-emerald-600/20 border border-emerald-500/30 flex items-center justify-center text-emerald-400">
+            <Activity className="w-5 h-5" />
           </div>
-          <span className="font-bold text-lg tracking-tight">PredMaintain</span>
+          <div>
+            <span className="font-bold text-base tracking-tight text-foreground block leading-tight">PredMaintain</span>
+            <span className="text-[10px] font-medium text-muted-foreground tracking-wider uppercase block">Plant Telemetry & CBM</span>
+          </div>
         </div>
       </div>
 
@@ -54,13 +58,28 @@ export function Sidebar({ className }: SidebarProps) {
             </Link>
           );
         })}
+
+        <div className="pt-2 mt-2 border-t border-border/40">
+          <Link href="/">
+            <div className="flex items-center gap-3 px-3 py-2 rounded-lg text-xs font-medium text-muted-foreground hover:bg-secondary/40 hover:text-cyan-400 transition-colors cursor-pointer">
+              <ExternalLink className="w-4 h-4" />
+              <span>Public Showcase</span>
+            </div>
+          </Link>
+        </div>
       </nav>
 
       <div className="p-4 border-t border-border/50">
-        <div className="p-4 rounded-xl bg-gradient-to-br from-indigo-500/10 to-purple-500/10 border border-indigo-500/20">
-          <h4 className="text-xs font-bold text-indigo-400 mb-1">AI ENGINE v2.0</h4>
-          <p className="text-[10px] text-muted-foreground leading-relaxed">
-            Multi-factor anomaly detection, trend analysis, and predictive maintenance active.
+        <div className="p-3.5 rounded-lg bg-secondary/40 border border-border/60">
+          <div className="flex items-center justify-between mb-1.5">
+            <span className="text-[11px] font-semibold text-foreground tracking-tight">Diagnostics Pipeline</span>
+            <span className="inline-flex items-center gap-1 text-[10px] text-emerald-400 font-mono">
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
+              ONLINE
+            </span>
+          </div>
+          <p className="text-[11px] text-muted-foreground leading-snug">
+            Real-time condition monitoring, SPC outlier flagging, and degradation modeling active across 8 plant assets.
           </p>
         </div>
       </div>

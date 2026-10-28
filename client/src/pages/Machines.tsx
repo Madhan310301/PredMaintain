@@ -18,7 +18,7 @@ export default function Machines() {
 
   const departments = useMemo(() => {
     if (!machines) return [];
-    return ["All", ...new Set(machines.map((m) => m.department))];
+    return ["All", ...Array.from(new Set(machines.map((m) => m.department)))];
   }, [machines]);
 
   const [activeDept, setActiveDept] = useState("All");

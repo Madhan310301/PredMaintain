@@ -4,8 +4,9 @@ import { MachineCard } from "@/components/MachineCard";
 import { AlertsFeed } from "@/components/AlertsFeed";
 import { FleetHeatmap } from "@/components/FleetHeatmap";
 import { PredictiveTimeline } from "@/components/PredictiveTimeline";
+import { MaintenanceAnalyticsBento } from "@/components/industrial/MaintenanceAnalyticsBento";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Activity, AlertTriangle, CheckCircle, Server, Brain, TrendingUp, DollarSign, Zap } from "lucide-react";
+import { Activity, AlertTriangle, CheckCircle, Server, Gauge, TrendingUp, DollarSign, Layers, Clock } from "lucide-react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { ResponsiveContainer, BarChart, Bar, XAxis, YAxis, Tooltip, CartesianGrid } from "recharts";
 
@@ -20,31 +21,31 @@ export default function Dashboard() {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard 
-          label="Total Machines" 
+          label="Monitored Assets" 
           value={fleet?.totalMachines || 0} 
           icon={Server} 
-          trend={`${fleet?.averageUptime || 0}% uptime`}
+          trend={`${fleet?.averageUptime || 0}% fleet availability`}
           color="text-primary"
         />
         <StatCard 
-          label="Healthy" 
+          label="Nominal Condition" 
           value={fleet?.healthyCount || 0} 
           icon={CheckCircle} 
-          trend="Operating normally"
+          trend="Operating in-spec"
           color="text-emerald-500"
         />
         <StatCard 
-          label="Warnings" 
+          label="Advisory Warnings" 
           value={fleet?.warningCount || 0} 
           icon={AlertTriangle} 
-          trend="Requires attention"
+          trend="Variance flagged"
           color="text-amber-500"
         />
         <StatCard 
-          label="Critical" 
+          label="Critical Attention" 
           value={fleet?.criticalCount || 0} 
           icon={Activity} 
-          trend="Immediate action"
+          trend="Intervention needed"
           color="text-rose-500"
         />
       </div>
@@ -52,8 +53,8 @@ export default function Dashboard() {
       {/* Executive Summary Row */}
       <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
         <MiniStat
-          icon={Brain}
-          label="Fleet Health"
+          icon={Gauge}
+          label="Fleet Condition Index"
           value={`${fleet?.averageHealthScore || 0}%`}
           color={
             (fleet?.averageHealthScore || 0) >= 70
@@ -65,19 +66,19 @@ export default function Dashboard() {
         />
         <MiniStat
           icon={AlertTriangle}
-          label="Active Alerts"
+          label="Active Outliers"
           value={`${fleet?.totalAlerts || 0}`}
           color="text-amber-500"
         />
         <MiniStat
-          icon={TrendingUp}
-          label="Predicted Failures"
-          value={`${fleet?.predictedFailuresThisWeek || 0} this week`}
+          icon={Clock}
+          label="Stoppage Risk (7d)"
+          value={`${fleet?.predictedFailuresThisWeek || 0} unit${(fleet?.predictedFailuresThisWeek || 0) === 1 ? "" : "s"}`}
           color="text-rose-400"
         />
         <MiniStat
           icon={DollarSign}
-          label="Maintenance Cost"
+          label="Period Maint. Spend"
           value={`$${((fleet?.totalMaintenanceCost || 0) / 1000).toFixed(1)}k`}
           color="text-blue-400"
         />
@@ -89,8 +90,8 @@ export default function Dashboard() {
         <Card className="lg:col-span-2 bg-card/50 border-border/50">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Zap className="w-4 h-4 text-primary" />
-              Fleet Health Map
+              <Layers className="w-4 h-4 text-primary" />
+              Plant Floor Condition Matrix
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -103,7 +104,7 @@ export default function Dashboard() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 text-amber-500" />
-              Live Alerts
+              Real-Time Telemetry Exceptions
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -118,8 +119,8 @@ export default function Dashboard() {
         <Card className="bg-card/50 border-border/50">
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
-              <Brain className="w-4 h-4 text-purple-500" />
-              Predicted Failure Timeline
+              <Clock className="w-4 h-4 text-purple-400" />
+              Prognostic Servicing Horizon
             </CardTitle>
           </CardHeader>
           <CardContent>
@@ -132,7 +133,7 @@ export default function Dashboard() {
           <CardHeader className="pb-3">
             <CardTitle className="text-sm font-medium text-muted-foreground flex items-center gap-2">
               <TrendingUp className="w-4 h-4 text-emerald-500" />
-              Department Health Scores
+              Department Reliability Scores
             </CardTitle>
           </CardHeader>
           <CardContent className="h-[280px]">
@@ -178,6 +179,19 @@ export default function Dashboard() {
             )}
           </CardContent>
         </Card>
+      </div>
+
+      {/* Maintenance & Telemetry Analytics Bento */}
+      <div className="pt-4">
+        <div className="mb-4">
+          <h2 className="text-lg font-bold tracking-tight text-foreground">
+            Asset Reliability & Telemetry Analytics Bento
+          </h2>
+          <p className="text-xs text-muted-foreground">
+            Multi-module analytical workbench: Economics, Live Sensor Envelopes, Risk Treemap, and Failure Modes
+          </p>
+        </div>
+        <MaintenanceAnalyticsBento />
       </div>
     </div>
   );
